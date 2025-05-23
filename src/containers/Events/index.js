@@ -16,16 +16,10 @@ const EventList = () => {
   const filteredEvents = (
     (!type
       ? data?.events
-      : data?.events) || []
-  ).filter((event, index) => {
-    if (
-      (currentPage - 1) * PER_PAGE <= index &&
-      PER_PAGE * currentPage > index
-    ) {
-      return true;
-    }
-    return false;
-  });
+      : data?.events.filter((event) => event.type === type)) || []
+  ).sort((a, b) => new Date(a.date) - new Date(b.date))
+  .filter((event, index) => (currentPage - 1) * PER_PAGE <= index && PER_PAGE * currentPage > index
+  );
   const changeType = (evtType) => {
     setCurrentPage(1);
     setType(evtType);
